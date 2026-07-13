@@ -16,11 +16,48 @@ function setStatus(text) {
   statusEl.textContent = text;
 }
 
-function addMessage(role, content) {
+function trimHistory() {
+  messages = messages.slice(-10);
+}
+
+function addMessage(role, content, references = []) {
   messages.push({ role, content });
+  trimHistory();
   const node = document.createElement("article");
   node.className = `message ${role}`;
-  node.textContent = content;
+
+  const contentNode = document.createElement("div");
+  contentNode.textContent = content;
+  node.appendChild(contentNode);
+
+  if (references.length > 0) {
+    const refsNode = document.createElement("div");
+    refsNode.className = "references";
+    refsNode.setAttribute("aria-label", "参考来源");
+
+    const titleNode = document.createElement("strong");
+    titleNode.textContent = "参考来源";
+    refsNode.appendChild(titleNode);
+
+    references.forEach((reference) => {
+      const itemNode = document.createElement("div");
+      itemNode.className = "reference";
+
+      const sourceNode = document.createElement("span");
+      sourceNode.className = "reference-source";
+      sourceNode.textContent = `${reference.source} #${reference.chunk_id}`;
+
+      const snippetNode = document.createElement("span");
+      snippetNode.className = "reference-snippet";
+      snippetNode.textContent = reference.snippet;
+
+      itemNode.append(sourceNode, snippetNode);
+      refsNode.appendChild(itemNode);
+    });
+
+    node.appendChild(refsNode);
+  }
+
   messagesEl.appendChild(node);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
@@ -50,7 +87,7 @@ async function sendUserMessage(text) {
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "请求失败");
-    addMessage("assistant", data.reply);
+    addMessage("assistant", data.reply, data.references || []);
     speak(data.reply);
     setStatus("准备就绪");
   } catch (error) {

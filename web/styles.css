@@ -121,6 +121,38 @@ button:disabled {
   background: var(--assistant);
 }
 
+.references {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(23, 32, 42, 0.12);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.references strong {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.reference {
+  display: grid;
+  gap: 4px;
+}
+
+.reference-source {
+  color: var(--accent-dark);
+  font-weight: 600;
+}
+
+.reference-snippet {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 .composer {
   display: grid;
   grid-template-columns: auto 1fr auto;
