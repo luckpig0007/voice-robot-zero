@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Voice Robot Zero</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="panel">
+        <header class="topbar">
+          <div>
+            <h1>Voice Robot Zero</h1>
+            <p id="status">准备就绪</p>
+          </div>
+          <button id="clearButton" class="icon-button" title="清空对话">清空</button>
+        </header>
+
+        <div id="messages" class="messages" aria-live="polite"></div>
+
+        <form id="inputForm" class="composer">
+          <button id="listenButton" type="button" class="listen-button">按住说话</button>
+          <input id="textInput" autocomplete="off" placeholder="也可以直接输入文字" />
+          <button type="submit">发送</button>
+        </form>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
